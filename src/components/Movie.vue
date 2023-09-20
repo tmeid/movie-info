@@ -1,4 +1,5 @@
 <template>
+    <div v-if="moviesStore.loading">Loading...</div>
     <div class="movies-list">
         <div class="movie" v-for="movie in moviesStore.movies" :key="movie.imdbID">
             <router-link :to="'/movie/' + movie.imdbID" class="movie-link">

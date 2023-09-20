@@ -3,13 +3,15 @@ import { defineStore } from "pinia";
 const useMoviesStore = defineStore('movieModule', {
     state: () => {
         return{
-            movies: null
+            movies: null,
+            loading: false
         }
     },
     getters: {
     }, 
     actions: {
         async getMovies(url, method){
+            this.loading = true;
             this.movies = '';
             this.isFound = true;
             let option = {
@@ -24,6 +26,7 @@ const useMoviesStore = defineStore('movieModule', {
             }else{
                 this.router.push({name: 'notFound'})
             }
+            this.loading = false;
            
         }
         
