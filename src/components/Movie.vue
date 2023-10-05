@@ -1,32 +1,40 @@
 <template>
     <div v-if="moviesStore.loading">Loading...</div>
-    <div class="movies-list">
-        <div class="movie" v-for="movie in moviesStore.movies" :key="movie.imdbID">
-            <router-link :to="'/movie/' + movie.imdbID" class="movie-link">
-                <div class="movie-image">
-                    <img :src="movie.Poster" :alt="movie.Title" />
-                    <div class="type">{{ movie.Type }}</div>
-                </div>
-            </router-link>
-                <div class="detail">
-                    <p class="year">{{ movie.Year }}</p>
-                    <router-link :to="'/movie/' + movie.imdbID" class="movie-link">
-                        <h3>{{ movie.Title }}</h3>
-                    </router-link>
-                </div>         
+    <div  v-else>
+        <div v-if="moviesStore.movies" class="movies-list">
+            <div class="movie" v-for="movie in moviesStore.movies" :key="movie.imdbID">
+                <router-link :to="'/movie/' + movie.imdbID" class="movie-link">
+                    <div class="movie-image">
+                        <img :src="movie.Poster" :alt="movie.Title" />
+                        <div class="type">{{ movie.Type }}</div>
+                    </div>
+                </router-link>
+                    <div class="detail">
+                        <p class="year">{{ movie.Year }}</p>
+                        <router-link :to="'/movie/' + movie.imdbID" class="movie-link">
+                            <h3>{{ movie.Title }}</h3>
+                        </router-link>
+                    </div>         
+            </div>
+        </div>
+        <div v-else>
+            <p>Không tìm thấy</p>
         </div>
     </div>
 </template>
 <script setup>
-import { onBeforeMount } from 'vue';
+import { onMounted, onBeforeMount } from 'vue';
 import useMoviesStore from '../stores/apiMovie';
 import config from '../config';
 
 const moviesStore = useMoviesStore();
 
-onBeforeMount( () => {
-    let movieUrl = `${config.url}?apikey=${config.apikey}&s=doraemon`;
-    moviesStore.getMovies(movieUrl, 'GET');
+onMounted( () => {
+    // init films in home page if not searched before
+    if(!moviesStore.movies){
+        let movieUrl = `${config.url}?apikey=${config.apikey}&s=doraemon`;
+        moviesStore.getMovies(movieUrl, 'GET');
+    }
 });
 
 // const isFound = computed(() => {

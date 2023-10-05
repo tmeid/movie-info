@@ -2,9 +2,9 @@
   <div>
     <header>
       <div class="container wrap-header">
-        <router-link :to="{name: 'home'}">
+        <a href="/">
           <h1>Movie Info</h1>
-        </router-link>
+        </a>
 
         <Search />
       </div>

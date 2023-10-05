@@ -23,8 +23,6 @@ const useMoviesStore = defineStore('movieModule', {
             if(data.Search){
                 this.movies = data.Search   
                 this.router.push({name: 'home'})
-            }else{
-                this.router.push({name: 'notFound'})
             }
             this.loading = false;
            
